@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useThumbnailStore, type TitleVariant } from "@/store/thumbnail-store";
+import { useSettingsStore } from "@/store/settings-store";
 import { vi } from "@/lib/vi";
 
 const FORMULA_COLOR: Record<string, string> = {
@@ -156,6 +157,7 @@ function TitleCard({
 }
 
 export function TitlePanel() {
+  const { googleApiKey, anthropicApiKey, titleModel } = useSettingsStore();
   const {
     titleTopic,
     setTitleTopic,
@@ -181,7 +183,11 @@ export function TitlePanel() {
       const res = await fetch("/api/title", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: titleTopic, audience: titleAudience }),
+        body: JSON.stringify({
+          topic: titleTopic,
+          audience: titleAudience,
+          settings: { googleApiKey, anthropicApiKey, titleModel },
+        }),
       });
       const data = await res.json();
       if (data.titles) {
@@ -223,8 +229,8 @@ export function TitlePanel() {
             {vi.ts_topic}
           </label>
           <textarea
-            className="apple-input w-full text-[13px] resize-none leading-relaxed"
-            rows={3}
+            className="apple-input w-full text-[13px] resize-none leading-relaxed !h-auto !py-2.5 !leading-relaxed"
+            rows={5}
             placeholder={vi.ts_topic_ph}
             value={titleTopic}
             onChange={(e) => setTitleTopic(e.target.value)}

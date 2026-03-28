@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Upload, Loader2, Trash2, Plus, ImageIcon } from "lucide-react";
 import { useThumbnailStore, type VisualStyle } from "@/store/thumbnail-store";
+import { useSettingsStore } from "@/store/settings-store";
 import { vi } from "@/lib/vi";
 
 const styles: { value: VisualStyle; label: string; desc: string }[] = [
@@ -18,6 +19,7 @@ const styles: { value: VisualStyle; label: string; desc: string }[] = [
 export function Step8Style() {
   const { step8, setStep8, studioMode, stylePresets, addStylePreset, removeStylePreset } =
     useThumbnailStore();
+  const { googleApiKey } = useSettingsStore();
 
   const isQuick = studioMode === "quick";
 
@@ -48,7 +50,7 @@ export function Step8Style() {
       const res = await fetch("/api/analyze-style", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ images: uploadedImages, channelName }),
+        body: JSON.stringify({ images: uploadedImages, channelName, settings: { googleApiKey } }),
       });
       const data = await res.json();
       if (data.analysis) {

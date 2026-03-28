@@ -10,6 +10,27 @@ export const vi = {
   tab_gallery: "Thư viện",
   tab_watermark: "Watermark",
 
+  // Settings
+  set_title: "Cài đặt",
+  set_subtitle: "API Keys & Model",
+  set_keys_title: "API Keys",
+  set_google_key: "Google AI API Key",
+  set_google_key_ph: "AIza...",
+  set_anthropic_key: "Anthropic API Key",
+  set_anthropic_key_ph: "sk-ant-...",
+  set_show: "Hiện",
+  set_hide: "Ẩn",
+  set_saved: "Đã lưu tự động",
+  set_models_title: "Chọn Model",
+  set_title_model: "Model cho Title Studio",
+  set_text_model: "Model cho Metadata & Suggest",
+  set_thumb_model: "Model cho Thumbnail (cố định)",
+  set_thumb_model_locked: "Chỉ Gemini mới tạo được ảnh",
+  set_provider_gemini: "Google Gemini",
+  set_provider_anthropic: "Anthropic Claude",
+  set_badge_best: "Best",
+  set_badge_fast: "Fast",
+
   // Title Studio
   ts_title: "Title Studio",
   ts_subtitle: "Nghiên cứu & tạo title hấp dẫn",

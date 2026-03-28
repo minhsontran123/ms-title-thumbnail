@@ -6,6 +6,7 @@ import {
   Wand2,
   LayoutGrid,
   Droplets,
+  Settings,
 } from "lucide-react";
 import { useThumbnailStore, type TabType } from "@/store/thumbnail-store";
 import { TitlePanel } from "@/components/title/title-panel";
@@ -13,10 +14,11 @@ import { StudioPanel } from "@/components/studio/studio-panel";
 import { EditPanel } from "@/components/edit/edit-panel";
 import { GalleryPanel } from "@/components/gallery/gallery-panel";
 import { WatermarkPanel } from "@/components/watermark/watermark-panel";
+import { SettingsPanel } from "@/components/settings/settings-panel";
 import { Workspace } from "@/components/workspace/workspace";
 import { vi } from "@/lib/vi";
 
-const tabs: { id: TabType; label: string; icon: typeof Monitor }[] = [
+const mainTabs: { id: TabType; label: string; icon: typeof Monitor }[] = [
   { id: "title", label: vi.tab_title, icon: Type },
   { id: "thumbnail", label: vi.tab_thumbnail, icon: Monitor },
   { id: "edit", label: vi.tab_edit, icon: Wand2 },
@@ -37,6 +39,8 @@ function SidebarContent() {
       return <GalleryPanel />;
     case "watermark":
       return <WatermarkPanel />;
+    case "settings":
+      return <SettingsPanel />;
     default:
       return null;
   }
@@ -65,8 +69,8 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Tab icons */}
-        {tabs.map((tab) => {
+        {/* Main tab icons */}
+        {mainTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
@@ -86,6 +90,23 @@ export default function Home() {
             </button>
           );
         })}
+
+        {/* Settings — pinned to bottom */}
+        <div className="mt-auto">
+          <button
+            onClick={() => setActiveTab("settings")}
+            className={`flex flex-col items-center gap-1 w-[72px] py-3 rounded-xl transition-colors ${
+              activeTab === "settings"
+                ? "text-sys-blue"
+                : "text-label-secondary hover:text-label"
+            }`}
+          >
+            <Settings className="w-[22px] h-[22px]" strokeWidth={activeTab === "settings" ? 2.2 : 1.8} />
+            <span className={`text-[11px] leading-tight ${activeTab === "settings" ? "font-semibold" : "font-medium"}`}>
+              {vi.set_title}
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* ─── Panel ─── */}
@@ -93,10 +114,10 @@ export default function Home() {
         {/* Panel header */}
         <div className="px-6 pt-6 pb-4">
           <h1 className="text-[17px] font-semibold tracking-tight text-label">
-            {activeTab === "title" ? vi.ts_title : vi.app_title}
+            {activeTab === "title" ? vi.ts_title : activeTab === "settings" ? vi.set_title : vi.app_title}
           </h1>
           <p className="text-[13px] text-label-secondary mt-0.5">
-            {activeTab === "title" ? vi.ts_subtitle : vi.app_subtitle}
+            {activeTab === "title" ? vi.ts_subtitle : activeTab === "settings" ? vi.set_subtitle : vi.app_subtitle}
           </p>
         </div>
 

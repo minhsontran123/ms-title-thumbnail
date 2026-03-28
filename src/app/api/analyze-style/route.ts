@@ -1,11 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
-const genai = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_API_KEY! });
-
 export async function POST(request: Request) {
   try {
-    const { images, channelName } = await request.json();
+    const { images, channelName, settings } = await request.json();
+    const apiKey = settings?.googleApiKey || process.env.GOOGLE_AI_API_KEY!;
+    const genai = new GoogleGenAI({ apiKey });
 
     if (!images || images.length === 0) {
       return NextResponse.json({ error: "Cần ít nhất 1 ảnh thumbnail mẫu" }, { status: 400 });
@@ -46,7 +46,7 @@ Respond in English only. Be specific, not vague.`,
     });
 
     const response = await genai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.1-pro",
       contents: [{ role: "user", parts }],
     });
 

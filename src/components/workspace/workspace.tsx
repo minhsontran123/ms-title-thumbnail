@@ -11,10 +11,12 @@ import {
   Code2,
 } from "lucide-react";
 import { useThumbnailStore } from "@/store/thumbnail-store";
+import { useSettingsStore } from "@/store/settings-store";
 import { vi } from "@/lib/vi";
 import { useState } from "react";
 
 export function Workspace() {
+  const { googleApiKey, anthropicApiKey, textModel } = useSettingsStore();
   const {
     generatedImageUrl,
     generatedPrompt,
@@ -48,7 +50,7 @@ export function Workspace() {
       const res = await fetch("/api/metadata", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ step1, step2 }),
+        body: JSON.stringify({ step1, step2, settings: { googleApiKey, anthropicApiKey, textModel } }),
       });
       const data = await res.json();
       setMetadata(data);

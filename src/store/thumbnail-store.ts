@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type TabType = "title" | "thumbnail" | "edit" | "gallery" | "watermark";
+export type TabType = "title" | "thumbnail" | "edit" | "gallery" | "watermark" | "settings";
 
 export type TitleFormula =
   | "loss_number"
