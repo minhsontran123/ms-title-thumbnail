@@ -1,12 +1,14 @@
 "use client";
 
 import {
+  Type,
   Monitor,
   Wand2,
   LayoutGrid,
   Droplets,
 } from "lucide-react";
 import { useThumbnailStore, type TabType } from "@/store/thumbnail-store";
+import { TitlePanel } from "@/components/title/title-panel";
 import { StudioPanel } from "@/components/studio/studio-panel";
 import { EditPanel } from "@/components/edit/edit-panel";
 import { GalleryPanel } from "@/components/gallery/gallery-panel";
@@ -15,7 +17,8 @@ import { Workspace } from "@/components/workspace/workspace";
 import { vi } from "@/lib/vi";
 
 const tabs: { id: TabType; label: string; icon: typeof Monitor }[] = [
-  { id: "studio", label: vi.tab_studio, icon: Monitor },
+  { id: "title", label: vi.tab_title, icon: Type },
+  { id: "thumbnail", label: vi.tab_thumbnail, icon: Monitor },
   { id: "edit", label: vi.tab_edit, icon: Wand2 },
   { id: "gallery", label: vi.tab_gallery, icon: LayoutGrid },
   { id: "watermark", label: vi.tab_watermark, icon: Droplets },
@@ -24,7 +27,9 @@ const tabs: { id: TabType; label: string; icon: typeof Monitor }[] = [
 function SidebarContent() {
   const { activeTab } = useThumbnailStore();
   switch (activeTab) {
-    case "studio":
+    case "title":
+      return <TitlePanel />;
+    case "thumbnail":
       return <StudioPanel />;
     case "edit":
       return <EditPanel />;
@@ -88,10 +93,10 @@ export default function Home() {
         {/* Panel header */}
         <div className="px-6 pt-6 pb-4">
           <h1 className="text-[17px] font-semibold tracking-tight text-label">
-            {vi.app_title}
+            {activeTab === "title" ? vi.ts_title : vi.app_title}
           </h1>
           <p className="text-[13px] text-label-secondary mt-0.5">
-            {vi.app_subtitle}
+            {activeTab === "title" ? vi.ts_subtitle : vi.app_subtitle}
           </p>
         </div>
 

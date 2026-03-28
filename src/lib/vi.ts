@@ -4,10 +4,36 @@ export const vi = {
   app_subtitle: "Tạo thumbnail bằng AI",
 
   // Tabs (must be SHORT — no wrapping in segmented control)
-  tab_studio: "Studio",
+  tab_title: "Title",
+  tab_thumbnail: "Thumbnail",
   tab_edit: "Sửa",
-  tab_gallery: "Bộ sưu tập",
+  tab_gallery: "Thư viện",
   tab_watermark: "Watermark",
+
+  // Title Studio
+  ts_title: "Title Studio",
+  ts_subtitle: "Nghiên cứu & tạo title hấp dẫn",
+  ts_topic: "Ý tưởng video",
+  ts_topic_ph: "Mô tả ngắn gọn nội dung video... VD: tôi thua lệnh vì không dùng stop loss",
+  ts_audience: "Đối tượng",
+  ts_generate: "Tạo title",
+  ts_generating: "Đang tạo...",
+  ts_regenerate: "Tạo lại",
+  ts_results: (n: number) => `${n} title được tạo`,
+  ts_use_title: "Dùng title này",
+  ts_used: "Đang dùng",
+  ts_score: "Điểm",
+  ts_formula: "Công thức",
+  ts_score_emotion: "Cảm xúc",
+  ts_score_clarity: "Rõ ràng",
+  ts_score_curiosity: "Tò mò",
+  ts_score_power: "Power words",
+  ts_score_seo: "SEO",
+  ts_empty_title: "Nhập ý tưởng để bắt đầu",
+  ts_empty_desc: "AI sẽ tạo 12 title theo công thức proven cho kênh trading",
+  ts_selected_title: "Title đã chọn",
+  ts_goto_thumbnail: "Tạo thumbnail →",
+  ts_char_count: (n: number) => `${n} ký tự`,
 
   // Step labels (8 steps, grouped into 4 phases for progress bar)
   step_context: "Bối cảnh",
@@ -167,7 +193,7 @@ export const vi = {
   edit_title: "Chỉnh sửa",
   edit_desc: "Chọn thumbnail rồi chỉnh sửa bằng AI",
   edit_select: "Chọn thumbnail",
-  edit_empty: "Chưa có thumbnail nào. Hãy tạo ở Studio trước.",
+  edit_empty: "Chưa có thumbnail nào. Hãy tạo ở Thumbnail trước.",
   edit_instruction: "Hướng dẫn chỉnh sửa",
   edit_instruction_ph: "Mô tả thay đổi bạn muốn...",
   edit_quick: "Chỉnh nhanh",
@@ -184,8 +210,8 @@ export const vi = {
   gal_title: "Bộ sưu tập",
   gal_count: (n: number) => `${n} thumbnail đã tạo`,
   gal_empty_title: "Chưa có thumbnail nào",
-  gal_empty_desc: "Tạo thumbnail đầu tiên ở Studio",
-  gal_open_studio: "Mở Studio",
+  gal_empty_desc: "Tạo thumbnail đầu tiên ở Thumbnail Studio",
+  gal_open_studio: "Mở Thumbnail",
 
   // Watermark
   wm_title: "Watermark",

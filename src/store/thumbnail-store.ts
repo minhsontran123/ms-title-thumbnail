@@ -1,6 +1,38 @@
 import { create } from "zustand";
 
-export type TabType = "studio" | "edit" | "gallery" | "watermark";
+export type TabType = "title" | "thumbnail" | "edit" | "gallery" | "watermark";
+
+export type TitleFormula =
+  | "loss_number"
+  | "warning"
+  | "secret"
+  | "journey"
+  | "result"
+  | "question"
+  | "comparison"
+  | "controversy"
+  | "mistake"
+  | "how_to"
+  | "exclusive"
+  | "beginner";
+
+export interface TitleVariant {
+  id: string;
+  title: string;
+  formula: string;
+  formulaKey: TitleFormula;
+  score: number;
+  scores: {
+    emotion: number;
+    clarity: number;
+    curiosity: number;
+    powerWords: number;
+    seo: number;
+  };
+  suggestedEmotionalTrigger: EmotionalTrigger;
+  suggestedTextOverlay: string;
+  suggestedPrimaryColor: string;
+}
 export type StudioMode = "full" | "quick";
 
 export type AudienceType = "newbie" | "intermediate" | "advanced" | "general";
@@ -197,6 +229,18 @@ interface ThumbnailStore {
   addStylePreset: (preset: StylePreset) => void;
   removeStylePreset: (id: string) => void;
 
+  // Title Studio
+  titleTopic: string;
+  setTitleTopic: (topic: string) => void;
+  titleAudience: AudienceType;
+  setTitleAudience: (audience: AudienceType) => void;
+  generatedTitles: TitleVariant[];
+  setGeneratedTitles: (titles: TitleVariant[]) => void;
+  selectedTitle: TitleVariant | null;
+  setSelectedTitle: (title: TitleVariant | null) => void;
+  isTitleGenerating: boolean;
+  setIsTitleGenerating: (val: boolean) => void;
+
   // Workspace
   isGenerating: boolean;
   setIsGenerating: (val: boolean) => void;
@@ -209,7 +253,7 @@ interface ThumbnailStore {
 }
 
 export const useThumbnailStore = create<ThumbnailStore>((set) => ({
-  activeTab: "studio",
+  activeTab: "title",
   setActiveTab: (tab) => set({ activeTab: tab }),
 
   studioMode: "quick",
@@ -270,6 +314,17 @@ export const useThumbnailStore = create<ThumbnailStore>((set) => ({
   stylePresets: [],
   addStylePreset: (preset) => set((s) => ({ stylePresets: [...s.stylePresets, preset] })),
   removeStylePreset: (id) => set((s) => ({ stylePresets: s.stylePresets.filter((p) => p.id !== id) })),
+
+  titleTopic: "",
+  setTitleTopic: (topic) => set({ titleTopic: topic }),
+  titleAudience: "general",
+  setTitleAudience: (audience) => set({ titleAudience: audience }),
+  generatedTitles: [],
+  setGeneratedTitles: (titles) => set({ generatedTitles: titles }),
+  selectedTitle: null,
+  setSelectedTitle: (title) => set({ selectedTitle: title }),
+  isTitleGenerating: false,
+  setIsTitleGenerating: (val) => set({ isTitleGenerating: val }),
 
   isGenerating: false,
   setIsGenerating: (val) => set({ isGenerating: val }),

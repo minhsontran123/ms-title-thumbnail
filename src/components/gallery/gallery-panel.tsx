@@ -49,7 +49,7 @@ export function GalleryPanel() {
             </p>
             <button
               className="apple-btn-primary mt-5 !h-10 text-[13px] px-5"
-              onClick={() => setActiveTab("studio")}
+              onClick={() => setActiveTab("thumbnail")}
             >
               {vi.gal_open_studio}
             </button>
