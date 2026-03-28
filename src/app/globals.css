@@ -7,8 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Apple font stack: SF Pro → Inter fallback */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", ui-monospace, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -46,75 +47,75 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ─── Apple HIG System Colors (iOS 17+) ─── */
+  --color-sys-blue: #007AFF;
+  --color-sys-green: #34C759;
+  --color-sys-red: #FF3B30;
+  --color-sys-orange: #FF9500;
+  --color-sys-yellow: #FFCC00;
+  --color-sys-purple: #AF52DE;
+  --color-sys-pink: #FF2D55;
+  --color-sys-teal: #5AC8FA;
+  --color-sys-indigo: #5856D6;
+
+  /* ─── Apple Label Colors (exact HIG values) ─── */
+  --color-label: rgba(0, 0, 0, 1.0);
+  --color-label-secondary: rgba(60, 60, 67, 0.60);
+  --color-label-tertiary: rgba(60, 60, 67, 0.30);
+  --color-label-quaternary: rgba(60, 60, 67, 0.18);
+
+  /* ─── Apple Background Colors ─── */
+  --color-sys-bg: #F2F2F7;
+  --color-sys-bg-secondary: #FFFFFF;
+  --color-sys-bg-tertiary: #F2F2F7;
+
+  /* ─── Apple Grouped Background ─── */
+  --color-grouped-bg: #F2F2F7;
+  --color-grouped-bg-secondary: #FFFFFF;
+  --color-grouped-bg-tertiary: #F2F2F7;
+
+  /* ─── Apple Separator & Fill (exact HIG values) ─── */
+  --color-separator: rgba(60, 60, 67, 0.12);
+  --color-separator-opaque: #C6C6C8;
+  --color-fill: rgba(120, 120, 128, 0.12);
+  --color-fill-secondary: rgba(120, 120, 128, 0.08);
+  --color-fill-tertiary: rgba(120, 120, 128, 0.06);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: oklch(0.98 0.002 250);
+  --foreground: oklch(0.141 0.005 285.82);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.141 0.005 285.82);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.82);
+  --primary: oklch(0.546 0.245 262.88);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --secondary: oklch(0.967 0.001 286.38);
+  --secondary-foreground: oklch(0.344 0.006 285.82);
+  --muted: oklch(0.967 0.001 286.38);
+  --muted-foreground: oklch(0.553 0.013 286.07);
+  --accent: oklch(0.967 0.001 286.38);
+  --accent-foreground: oklch(0.344 0.006 285.82);
+  --destructive: oklch(0.577 0.245 27.33);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.546 0.245 262.88);
+  --chart-1: oklch(0.546 0.245 262.88);
+  --chart-2: oklch(0.6 0.18 168.29);
+  --chart-3: oklch(0.398 0.07 227.39);
+  --chart-4: oklch(0.828 0.189 84.43);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.75rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.82);
+  --sidebar-primary: oklch(0.546 0.245 262.88);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.38);
+  --sidebar-accent-foreground: oklch(0.344 0.006 285.82);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.546 0.245 262.88);
 }
 
 @layer base {
@@ -122,9 +123,283 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-sys-bg text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   html {
     @apply font-sans;
   }
+}
+
+/* ─── macOS-style overlay scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*:hover > ::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.18);
+  background-clip: padding-box;
+}
+
+/* ─── Focus: Apple keyboard focus ring ─── */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: rgba(0, 122, 255, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25) !important;
+}
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+}
+
+/* ─── Apple frosted glass materials ─── */
+.material-regular {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+.material-thick {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(30px);
+  -webkit-backdrop-filter: saturate(180%) blur(30px);
+}
+
+/* ─── Apple shadow system ─── */
+.shadow-apple-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+.shadow-apple {
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.shadow-apple-md {
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.shadow-apple-lg {
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Apple input (44px touch target, 36px visual) ─── */
+.apple-input {
+  display: block;
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0;
+  border-radius: 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  background: rgba(120, 120, 128, 0.06);
+  color: var(--color-label);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.apple-input::placeholder {
+  color: var(--color-label-tertiary);
+  font-weight: 400;
+  font-size: 13px;
+}
+.apple-input:focus {
+  outline: none;
+  border-color: rgba(0, 122, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+.apple-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Textarea variant */
+.apple-textarea {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  border-radius: 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  background: rgba(120, 120, 128, 0.06);
+  color: var(--color-label);
+  resize: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.apple-textarea::placeholder {
+  color: var(--color-label-tertiary);
+  font-weight: 400;
+  font-size: 13px;
+}
+.apple-textarea:focus {
+  outline: none;
+  border-color: rgba(0, 122, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+/* ─── Apple segmented control ─── */
+.segmented-control {
+  display: flex;
+  padding: 2px;
+  border-radius: 9px;
+  background: rgba(120, 120, 128, 0.08);
+}
+.segmented-control-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 4px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-label-secondary);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+.segmented-control-item.active {
+  background: #fff;
+  color: var(--color-label);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 0.5px 1.5px rgba(0, 0, 0, 0.06), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Apple grouped list / card ─── */
+.apple-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.apple-row {
+  padding: 14px 16px;
+  position: relative;
+}
+.apple-row + .apple-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 0;
+  height: 0.5px;
+  background: rgba(60, 60, 67, 0.12);
+}
+
+/* ─── Apple buttons (44px = standard tap target) ─── */
+.apple-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  background: #007AFF;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+.apple-btn-primary:hover { background: #0071E3; }
+.apple-btn-primary:active { background: #0068D6; transform: scale(0.98); }
+.apple-btn-primary:disabled { opacity: 0.35; pointer-events: none; }
+
+.apple-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  background: rgba(0, 122, 255, 0.08);
+  color: #007AFF;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+.apple-btn-secondary:hover { background: rgba(0, 122, 255, 0.12); }
+.apple-btn-secondary:active { background: rgba(0, 122, 255, 0.16); transform: scale(0.98); }
+.apple-btn-secondary:disabled { opacity: 0.35; pointer-events: none; }
+
+.apple-btn-plain {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #007AFF;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+.apple-btn-plain:hover { background: rgba(0, 122, 255, 0.06); }
+.apple-btn-plain:disabled { opacity: 0.35; pointer-events: none; }
+
+/* ─── Apple pill / chip ─── */
+.apple-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.apple-pill-inactive {
+  background: rgba(120, 120, 128, 0.08);
+  color: var(--color-label-secondary);
+}
+.apple-pill-inactive:hover { background: rgba(120, 120, 128, 0.12); }
+.apple-pill-active {
+  background: #007AFF;
+  color: #fff;
+}
+
+/* ─── Step number (Apple HIG: 32px, medium weight) ─── */
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #007AFF;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
 }

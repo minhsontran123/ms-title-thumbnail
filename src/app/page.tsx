@@ -1,65 +1,107 @@
-import Image from "next/image";
+"use client";
+
+import {
+  Monitor,
+  Wand2,
+  LayoutGrid,
+  Droplets,
+} from "lucide-react";
+import { useThumbnailStore, type TabType } from "@/store/thumbnail-store";
+import { StudioPanel } from "@/components/studio/studio-panel";
+import { EditPanel } from "@/components/edit/edit-panel";
+import { GalleryPanel } from "@/components/gallery/gallery-panel";
+import { WatermarkPanel } from "@/components/watermark/watermark-panel";
+import { Workspace } from "@/components/workspace/workspace";
+import { vi } from "@/lib/vi";
+
+const tabs: { id: TabType; label: string; icon: typeof Monitor }[] = [
+  { id: "studio", label: vi.tab_studio, icon: Monitor },
+  { id: "edit", label: vi.tab_edit, icon: Wand2 },
+  { id: "gallery", label: vi.tab_gallery, icon: LayoutGrid },
+  { id: "watermark", label: vi.tab_watermark, icon: Droplets },
+];
+
+function SidebarContent() {
+  const { activeTab } = useThumbnailStore();
+  switch (activeTab) {
+    case "studio":
+      return <StudioPanel />;
+    case "edit":
+      return <EditPanel />;
+    case "gallery":
+      return <GalleryPanel />;
+    case "watermark":
+      return <WatermarkPanel />;
+    default:
+      return null;
+  }
+}
 
 export default function Home() {
+  const { activeTab, setActiveTab } = useThumbnailStore();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex h-screen overflow-hidden bg-sys-bg">
+      {/* ─── Icon Rail ─── */}
+      <nav className="w-[88px] min-w-[88px] flex flex-col items-center pt-6 pb-4 gap-2 bg-grouped-bg-secondary border-r border-separator">
+        {/* App icon */}
+        <div className="w-11 h-11 rounded-[12px] bg-sys-blue flex items-center justify-center shadow-apple-sm mb-5">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 3l1.912 5.813a2 2 0 001.272 1.272L21 12l-5.813 1.912a2 2 0 00-1.272 1.272L12 21l-1.912-5.813a2 2 0 00-1.272-1.272L3 12l5.813-1.912a2 2 0 001.272-1.272z" />
+          </svg>
+        </div>
+
+        {/* Tab icons */}
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex flex-col items-center gap-1 w-[72px] py-3 rounded-xl transition-colors ${
+                isActive
+                  ? "text-sys-blue"
+                  : "text-label-secondary hover:text-label"
+              }`}
+            >
+              <Icon className="w-[22px] h-[22px]" strokeWidth={isActive ? 2.2 : 1.8} />
+              <span className={`text-[11px] leading-tight ${isActive ? "font-semibold" : "font-medium"}`}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* ─── Panel ─── */}
+      <aside className="w-[400px] min-w-[400px] flex flex-col h-full bg-grouped-bg-secondary border-r border-separator">
+        {/* Panel header */}
+        <div className="px-6 pt-6 pb-4">
+          <h1 className="text-[17px] font-semibold tracking-tight text-label">
+            {vi.app_title}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-[13px] text-label-secondary mt-0.5">
+            {vi.app_subtitle}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="flex-1 overflow-hidden">
+          <SidebarContent />
         </div>
-      </main>
+      </aside>
+
+      {/* ─── Workspace ─── */}
+      <Workspace />
     </div>
   );
 }
