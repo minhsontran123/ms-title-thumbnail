@@ -79,7 +79,7 @@ export function Step2Hook() {
 
       {/* Desire Loop — subtle card */}
       <div className="rounded-xl bg-fill-tertiary p-4">
-        <p className="text-[11px] font-semibold text-label-tertiary uppercase tracking-wider mb-3">
+        <p className="text-[11px] font-semibold text-label-tertiary mb-3">
           {vi.s2_desire_loop}
         </p>
         <div className="flex items-center gap-2 text-[13px] font-medium flex-wrap">

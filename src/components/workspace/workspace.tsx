@@ -212,7 +212,7 @@ export function Workspace() {
             {/* Title */}
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-semibold text-label-tertiary uppercase tracking-wider">
+                <p className="text-[11px] font-semibold text-label-tertiary">
                   {vi.ws_meta_label_title}
                 </p>
                 <p className="text-[14px] font-medium text-label mt-1 truncate">
@@ -234,7 +234,7 @@ export function Workspace() {
             {/* Description */}
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-semibold text-label-tertiary uppercase tracking-wider">
+                <p className="text-[11px] font-semibold text-label-tertiary">
                   {vi.ws_meta_label_desc}
                 </p>
                 <p className="text-[13px] text-label-secondary mt-1 line-clamp-2 leading-relaxed">
@@ -255,7 +255,7 @@ export function Workspace() {
 
             {/* Tags */}
             <div>
-              <p className="text-[11px] font-semibold text-label-tertiary uppercase tracking-wider mb-2">
+              <p className="text-[11px] font-semibold text-label-tertiary mb-2">
                 {vi.ws_meta_label_tags}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -276,7 +276,7 @@ export function Workspace() {
 
         {/* Social Links */}
         <div className="mt-4 pt-4 border-t border-separator">
-          <p className="text-[11px] font-semibold text-label-tertiary uppercase tracking-wider mb-3">
+          <p className="text-[11px] font-semibold text-label-tertiary mb-3">
             {vi.ws_social}
           </p>
           <div className="grid grid-cols-2 gap-3">

@@ -225,7 +225,7 @@ export function TitlePanel() {
       <div className="px-6 pt-5 pb-4 space-y-4">
         {/* Topic */}
         <div>
-          <label className="text-[12px] font-semibold text-label-secondary uppercase tracking-wide block mb-1.5">
+          <label className="text-[12px] font-semibold text-label-secondary block mb-1.5">
             {vi.ts_topic}
           </label>
           <textarea
@@ -242,7 +242,7 @@ export function TitlePanel() {
 
         {/* Audience */}
         <div>
-          <label className="text-[12px] font-semibold text-label-secondary uppercase tracking-wide block mb-1.5">
+          <label className="text-[12px] font-semibold text-label-secondary block mb-1.5">
             {vi.ts_audience}
           </label>
           <div className="flex gap-2 flex-wrap">
@@ -302,7 +302,7 @@ export function TitlePanel() {
           <>
             {/* Count + selected title banner */}
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[12px] font-semibold text-label-tertiary uppercase tracking-wide">
+              <p className="text-[12px] font-semibold text-label-tertiary">
                 {vi.ts_results(generatedTitles.length)}
               </p>
               {selectedTitle && (
@@ -318,7 +318,7 @@ export function TitlePanel() {
             {/* Selected title summary */}
             {selectedTitle && (
               <div className="mb-4 p-3.5 rounded-2xl bg-sys-blue/6 border border-sys-blue/20">
-                <p className="text-[11px] font-semibold text-sys-blue uppercase tracking-wide mb-1">
+                <p className="text-[11px] font-semibold text-sys-blue mb-1">
                   {vi.ts_selected_title}
                 </p>
                 <p className="text-[13px] font-medium text-label leading-snug">

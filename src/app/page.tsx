@@ -14,7 +14,7 @@ import { StudioPanel } from "@/components/studio/studio-panel";
 import { EditPanel } from "@/components/edit/edit-panel";
 import { GalleryPanel } from "@/components/gallery/gallery-panel";
 import { WatermarkPanel } from "@/components/watermark/watermark-panel";
-import { SettingsPanel } from "@/components/settings/settings-panel";
+import { SettingsPage } from "@/components/settings/settings-page";
 import { Workspace } from "@/components/workspace/workspace";
 import { vi } from "@/lib/vi";
 
@@ -39,8 +39,6 @@ function SidebarContent() {
       return <GalleryPanel />;
     case "watermark":
       return <WatermarkPanel />;
-    case "settings":
-      return <SettingsPanel />;
     default:
       return null;
   }
@@ -109,25 +107,29 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ─── Panel ─── */}
-      <aside className="w-[400px] min-w-[400px] flex flex-col h-full bg-grouped-bg-secondary border-r border-separator">
-        {/* Panel header */}
-        <div className="px-6 pt-6 pb-4">
-          <h1 className="text-[17px] font-semibold tracking-tight text-label">
-            {activeTab === "title" ? vi.ts_title : activeTab === "settings" ? vi.set_title : vi.app_title}
-          </h1>
-          <p className="text-[13px] text-label-secondary mt-0.5">
-            {activeTab === "title" ? vi.ts_subtitle : activeTab === "settings" ? vi.set_subtitle : vi.app_subtitle}
-          </p>
-        </div>
+      {activeTab === "settings" ? (
+        <SettingsPage />
+      ) : (
+        <>
+          {/* ─── Panel ─── */}
+          <aside className="w-[400px] min-w-[400px] flex flex-col h-full bg-grouped-bg-secondary border-r border-separator">
+            <div className="px-6 pt-6 pb-4">
+              <h1 className="text-[17px] font-semibold tracking-tight text-label">
+                {activeTab === "title" ? vi.ts_title : vi.app_title}
+              </h1>
+              <p className="text-[13px] text-label-secondary mt-0.5">
+                {activeTab === "title" ? vi.ts_subtitle : vi.app_subtitle}
+              </p>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <SidebarContent />
+            </div>
+          </aside>
 
-        <div className="flex-1 overflow-hidden">
-          <SidebarContent />
-        </div>
-      </aside>
-
-      {/* ─── Workspace ─── */}
-      <Workspace />
+          {/* ─── Workspace ─── */}
+          <Workspace />
+        </>
+      )}
     </div>
   );
 }

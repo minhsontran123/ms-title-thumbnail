@@ -24,7 +24,7 @@ function ApiKeyInput({
   const [show, setShow] = useState(false);
   return (
     <div>
-      <label className="text-[12px] font-semibold text-label-secondary uppercase tracking-wide block mb-1.5">
+      <label className="text-[12px] font-semibold text-label-secondary block mb-1.5">
         {label}
       </label>
       <div className="relative">
@@ -68,7 +68,7 @@ function ModelSelector({
 }) {
   return (
     <div>
-      <label className="text-[12px] font-semibold text-label-secondary uppercase tracking-wide block mb-2">
+      <label className="text-[12px] font-semibold text-label-secondary block mb-2">
         {label}
       </label>
 
@@ -200,7 +200,7 @@ export function SettingsPanel() {
 
         {/* Thumbnail — locked */}
         <div>
-          <label className="text-[12px] font-semibold text-label-secondary uppercase tracking-wide block mb-2">
+          <label className="text-[12px] font-semibold text-label-secondary block mb-2">
             {vi.set_thumb_model}
           </label>
           <div className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-separator bg-fill-tertiary">
