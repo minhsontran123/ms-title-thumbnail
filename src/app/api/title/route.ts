@@ -45,12 +45,7 @@ Trả về JSON array với đúng 12 phần tử, mỗi phần tử gồm:
 
 Mỗi formulaKey phải xuất hiện đúng 1 lần. Trả về ONLY JSON array, không có markdown.`;
 
-    const text = await generateText({
-      prompt,
-      model,
-      googleApiKey: settings?.googleApiKey,
-      anthropicApiKey: settings?.anthropicApiKey,
-    });
+    const text = await generateText({ prompt, model });
 
     const cleaned = text.replace(/```json?\n?/g, "").replace(/```/g, "").trim();
     const titles = JSON.parse(cleaned);

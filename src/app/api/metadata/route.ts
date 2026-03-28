@@ -22,12 +22,7 @@ Return a JSON object with:
 
 Return ONLY valid JSON, no markdown.`;
 
-    const text = await generateText({
-      prompt,
-      model,
-      googleApiKey: settings?.googleApiKey,
-      anthropicApiKey: settings?.anthropicApiKey,
-    });
+    const text = await generateText({ prompt, model });
 
     const cleaned = text.replace(/```json?\n?/g, "").replace(/```/g, "").trim();
     const metadata = JSON.parse(cleaned);

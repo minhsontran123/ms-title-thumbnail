@@ -1,11 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
+import { readKeys } from "@/lib/keys";
 
 export async function POST(request: Request) {
   try {
-    const { images, channelName, settings } = await request.json();
-    const apiKey = settings?.googleApiKey || process.env.GOOGLE_AI_API_KEY!;
-    const genai = new GoogleGenAI({ apiKey });
+    const { images, channelName } = await request.json();
+    const keys = readKeys();
+    const genai = new GoogleGenAI({ apiKey: keys.googleApiKey });
 
     if (!images || images.length === 0) {
       return NextResponse.json({ error: "Cần ít nhất 1 ảnh thumbnail mẫu" }, { status: 400 });

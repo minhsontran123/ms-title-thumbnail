@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Eye, EyeOff, Lock, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff, Lock, Check, Loader2, Save } from "lucide-react";
 import {
   useSettingsStore,
   GEMINI_TEXT_MODELS,
@@ -12,39 +12,92 @@ import { vi } from "@/lib/vi";
 
 function ApiKeyInput({
   label,
-  value,
-  onChange,
+  maskedValue,
+  hasKey,
+  onSave,
   placeholder,
+  isSaving,
 }: {
   label: string;
-  value: string;
-  onChange: (v: string) => void;
+  maskedValue: string;
+  hasKey: boolean;
+  onSave: (key: string) => void;
   placeholder: string;
+  isSaving: boolean;
 }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState("");
   const [show, setShow] = useState(false);
+
+  const handleSave = () => {
+    if (draft.trim()) {
+      onSave(draft.trim());
+      setDraft("");
+      setEditing(false);
+    }
+  };
+
   return (
     <div className="space-y-1.5">
       <label className="text-[13px] font-semibold text-label block">{label}</label>
-      <div className="relative">
-        <input
-          type={show ? "text" : "password"}
-          className="apple-input w-full text-[13px] pr-12"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          autoComplete="off"
-        />
-        <button
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-label-tertiary hover:text-label transition-colors"
-          onClick={() => setShow((v) => !v)}
-          type="button"
-        >
-          {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-        </button>
-      </div>
-      {value && (
+
+      {editing ? (
+        <div className="space-y-2">
+          <div className="relative">
+            <input
+              type={show ? "text" : "password"}
+              className="apple-input w-full text-[13px] pr-12"
+              placeholder={placeholder}
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSave()}
+              autoFocus
+              autoComplete="off"
+            />
+            <button
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-label-tertiary hover:text-label transition-colors"
+              onClick={() => setShow((v) => !v)}
+              type="button"
+            >
+              {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
+          <div className="flex gap-2">
+            <button
+              className="apple-btn-primary !h-8 text-[12px] px-4 gap-1.5"
+              onClick={handleSave}
+              disabled={!draft.trim() || isSaving}
+            >
+              {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+              Lưu
+            </button>
+            <button
+              className="apple-btn-secondary !h-8 text-[12px] px-4"
+              onClick={() => { setEditing(false); setDraft(""); }}
+            >
+              Hủy
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <div className="flex-1 px-3.5 py-2.5 rounded-xl border border-separator bg-fill-tertiary">
+            <span className="text-[13px] font-mono text-label-secondary">
+              {hasKey ? maskedValue : "Chưa nhập"}
+            </span>
+          </div>
+          <button
+            className="apple-btn-secondary !h-9 text-[12px] px-4"
+            onClick={() => setEditing(true)}
+          >
+            {hasKey ? "Đổi" : "Nhập"}
+          </button>
+        </div>
+      )}
+
+      {hasKey && !editing && (
         <p className="text-[12px] text-sys-green flex items-center gap-1">
-          <Check className="w-3 h-3" /> Đã nhập
+          <Check className="w-3 h-3" /> Key được lưu an toàn trên server
         </p>
       )}
     </div>
@@ -132,52 +185,96 @@ function ModelGroup({
 }
 
 export function SettingsPage() {
-  const {
-    googleApiKey, setGoogleApiKey,
-    anthropicApiKey, setAnthropicApiKey,
-    titleModel, setTitleModel,
-    textModel, setTextModel,
-  } = useSettingsStore();
+  const { titleModel, setTitleModel, textModel, setTextModel } = useSettingsStore();
+
+  const [maskedGoogle, setMaskedGoogle] = useState("");
+  const [maskedAnthropic, setMaskedAnthropic] = useState("");
+  const [hasGoogle, setHasGoogle] = useState(false);
+  const [hasAnthropic, setHasAnthropic] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load current key status from server
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((data) => {
+        setMaskedGoogle(data.googleApiKey || "");
+        setMaskedAnthropic(data.anthropicApiKey || "");
+        setHasGoogle(data.hasGoogle);
+        setHasAnthropic(data.hasAnthropic);
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const handleSaveKey = async (field: "googleApiKey" | "anthropicApiKey", value: string) => {
+    setIsSaving(true);
+    try {
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: value }),
+      });
+      const data = await res.json();
+      setMaskedGoogle(data.googleApiKey || "");
+      setMaskedAnthropic(data.anthropicApiKey || "");
+      setHasGoogle(data.hasGoogle);
+      setHasAnthropic(data.hasAnthropic);
+    } catch (err) {
+      console.error("Failed to save key:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <Loader2 className="w-6 h-6 animate-spin text-label-tertiary" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 overflow-y-auto bg-sys-bg">
       <div className="max-w-4xl mx-auto px-10 py-10">
 
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-[24px] font-semibold text-label tracking-tight">{vi.set_title}</h1>
           <p className="text-[14px] text-label-secondary mt-1">{vi.set_subtitle}</p>
         </div>
 
-        {/* 2-column grid */}
         <div className="grid grid-cols-2 gap-6">
 
           {/* ─── Col 1: API Keys ─── */}
           <div className="apple-card p-6 space-y-6">
             <div>
               <h2 className="text-[15px] font-semibold text-label mb-1">{vi.set_keys_title}</h2>
-              <p className="text-[13px] text-label-tertiary">Lưu tự động, không gửi lên server</p>
+              <p className="text-[13px] text-label-tertiary">Key lưu trên server, không lộ ra trình duyệt</p>
             </div>
 
             <ApiKeyInput
               label={vi.set_google_key}
-              value={googleApiKey}
-              onChange={setGoogleApiKey}
+              maskedValue={maskedGoogle}
+              hasKey={hasGoogle}
+              onSave={(key) => handleSaveKey("googleApiKey", key)}
               placeholder={vi.set_google_key_ph}
+              isSaving={isSaving}
             />
 
             <div className="h-px bg-separator" />
 
             <ApiKeyInput
               label={vi.set_anthropic_key}
-              value={anthropicApiKey}
-              onChange={setAnthropicApiKey}
+              maskedValue={maskedAnthropic}
+              hasKey={hasAnthropic}
+              onSave={(key) => handleSaveKey("anthropicApiKey", key)}
               placeholder={vi.set_anthropic_key_ph}
+              isSaving={isSaving}
             />
 
             <div className="h-px bg-separator" />
 
-            {/* Thumbnail model — locked */}
             <div className="space-y-1.5">
               <label className="text-[13px] font-semibold text-label block">
                 {vi.set_thumb_model}
@@ -211,7 +308,6 @@ export function SettingsPage() {
               onChange={setTextModel}
             />
           </div>
-
         </div>
       </div>
     </div>

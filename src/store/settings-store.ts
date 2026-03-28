@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface AppSettings {
-  googleApiKey: string;
-  anthropicApiKey: string;
-  titleModel: string;
-  textModel: string;
-}
-
 export const GEMINI_TEXT_MODELS = [
   { id: "gemini-3.1-pro", label: "Gemini 3.1 Pro", badge: "Best" },
   { id: "gemini-2.5-pro", label: "Gemini 2.5 Pro", badge: "" },
@@ -26,22 +19,19 @@ export function isAnthropicModel(model: string) {
   return model.startsWith("claude-");
 }
 
-interface SettingsStore extends AppSettings {
-  setGoogleApiKey: (key: string) => void;
-  setAnthropicApiKey: (key: string) => void;
+interface SettingsStore {
+  titleModel: string;
+  textModel: string;
   setTitleModel: (model: string) => void;
   setTextModel: (model: string) => void;
 }
 
+// Only persist model selections — API keys are stored server-side
 export const useSettingsStore = create<SettingsStore>()(
   persist(
     (set) => ({
-      googleApiKey: "",
-      anthropicApiKey: "",
       titleModel: "gemini-3.1-pro",
       textModel: "gemini-3.1-pro",
-      setGoogleApiKey: (key) => set({ googleApiKey: key }),
-      setAnthropicApiKey: (key) => set({ anthropicApiKey: key }),
       setTitleModel: (model) => set({ titleModel: model }),
       setTextModel: (model) => set({ textModel: model }),
     }),

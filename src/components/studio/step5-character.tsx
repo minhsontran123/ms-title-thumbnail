@@ -6,6 +6,7 @@ import { useThumbnailStore, type TargetExpression } from "@/store/thumbnail-stor
 import { vi } from "@/lib/vi";
 
 const expressions: { value: TargetExpression; label: string }[] = [
+  { value: "original", label: vi.s5_original },
   { value: "shocked", label: vi.s5_shocked },
   { value: "happy", label: vi.s5_happy },
   { value: "angry", label: vi.s5_angry },

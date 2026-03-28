@@ -1,15 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import { buildPrompt } from "@/lib/build-prompt";
-
-const genai = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_API_KEY! });
+import { readKeys } from "@/lib/keys";
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
     const prompt = buildPrompt(data);
 
-    // Nano Banana Pro (Gemini 3 Pro Image) — best text rendering + 2K quality
+    const keys = readKeys();
+    const genai = new GoogleGenAI({ apiKey: keys.googleApiKey });
+
     const response = await genai.models.generateContent({
       model: "gemini-3-pro-image-preview",
       contents: prompt,

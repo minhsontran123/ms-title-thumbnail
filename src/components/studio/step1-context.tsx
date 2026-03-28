@@ -15,7 +15,7 @@ const audiences = [
 
 export function Step1Context() {
   const { step1, setStep1 } = useThumbnailStore();
-  const { googleApiKey, anthropicApiKey, textModel } = useSettingsStore();
+  const { textModel } = useSettingsStore();
   const [isSuggesting, setIsSuggesting] = useState(false);
 
   const handleAiSuggest = async () => {
@@ -25,7 +25,7 @@ export function Step1Context() {
       const res = await fetch("/api/suggest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ videoTopic: step1.videoTopic, videoTitle: step1.videoTitle, settings: { googleApiKey, anthropicApiKey, textModel } }),
+        body: JSON.stringify({ videoTopic: step1.videoTopic, videoTitle: step1.videoTitle, settings: { textModel } }),
       });
       const data = await res.json();
       if (!data.error) {

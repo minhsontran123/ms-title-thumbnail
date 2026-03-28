@@ -25,12 +25,7 @@ Hãy gợi ý JSON (không markdown, chỉ JSON thuần) với các trường sa
 
 Trả lời bằng tiếng Việt tự nhiên. Chỉ trả về JSON, không giải thích gì thêm.`;
 
-    const text = await generateText({
-      prompt,
-      model,
-      googleApiKey: settings?.googleApiKey,
-      anthropicApiKey: settings?.anthropicApiKey,
-    });
+    const text = await generateText({ prompt, model });
 
     const cleaned = text.replace(/```json?\n?/g, "").replace(/```/g, "").trim();
     const data = JSON.parse(cleaned);

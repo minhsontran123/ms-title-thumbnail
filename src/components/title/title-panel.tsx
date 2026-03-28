@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { useThumbnailStore, type TitleVariant } from "@/store/thumbnail-store";
 import { useSettingsStore } from "@/store/settings-store";
+
 import { vi } from "@/lib/vi";
 
 const FORMULA_COLOR: Record<string, string> = {
@@ -157,7 +158,7 @@ function TitleCard({
 }
 
 export function TitlePanel() {
-  const { googleApiKey, anthropicApiKey, titleModel } = useSettingsStore();
+  const { titleModel } = useSettingsStore();
   const {
     titleTopic,
     setTitleTopic,
@@ -186,7 +187,7 @@ export function TitlePanel() {
         body: JSON.stringify({
           topic: titleTopic,
           audience: titleAudience,
-          settings: { googleApiKey, anthropicApiKey, titleModel },
+          settings: { titleModel },
         }),
       });
       const data = await res.json();

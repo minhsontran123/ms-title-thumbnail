@@ -52,6 +52,7 @@ export type VisualElement =
   | "collage";
 export type LayoutType = "symmetric" | "rule-of-thirds" | "ab-split";
 export type TargetExpression =
+  | "original"
   | "shocked"
   | "happy"
   | "angry"
