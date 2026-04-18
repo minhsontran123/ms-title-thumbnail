@@ -233,6 +233,8 @@ interface ThumbnailStore {
   // Title Studio
   titleTopic: string;
   setTitleTopic: (topic: string) => void;
+  titleScript: string;
+  setTitleScript: (script: string) => void;
   titleAudience: AudienceType;
   setTitleAudience: (audience: AudienceType) => void;
   generatedTitles: TitleVariant[];
@@ -318,6 +320,8 @@ export const useThumbnailStore = create<ThumbnailStore>((set) => ({
 
   titleTopic: "",
   setTitleTopic: (topic) => set({ titleTopic: topic }),
+  titleScript: "",
+  setTitleScript: (script) => set({ titleScript: script }),
   titleAudience: "general",
   setTitleAudience: (audience) => set({ titleAudience: audience }),
   generatedTitles: [],

@@ -162,6 +162,8 @@ export function TitlePanel() {
   const {
     titleTopic,
     setTitleTopic,
+    titleScript,
+    setTitleScript,
     titleAudience,
     setTitleAudience,
     generatedTitles,
@@ -186,6 +188,7 @@ export function TitlePanel() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           topic: titleTopic,
+          script: titleScript || undefined,
           audience: titleAudience,
           settings: { titleModel },
         }),
@@ -237,6 +240,47 @@ export function TitlePanel() {
             onChange={(e) => setTitleTopic(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleGenerate();
+            }}
+          />
+        </div>
+
+        {/* Script */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-[12px] font-semibold text-label-secondary block">
+              {vi.ts_script}
+            </label>
+            {titleScript && (
+              <span className="text-[11px] text-label-tertiary">
+                {vi.ts_script_chars(titleScript.trim().split(/\s+/).filter(Boolean).length)}
+              </span>
+            )}
+          </div>
+          <textarea
+            className="apple-input w-full text-[13px] leading-relaxed !h-auto !py-2.5 !leading-relaxed min-h-[100px] max-h-[300px] resize-y"
+            placeholder={vi.ts_script_ph}
+            value={titleScript}
+            onChange={(e) => setTitleScript(e.target.value)}
+            onPaste={(e) => {
+              e.preventDefault();
+              const text = e.clipboardData.getData("text/plain");
+              const clean = text
+                .replace(/\*\*\*(.*?)\*\*\*/g, "$1")
+                .replace(/\*\*(.*?)\*\*/g, "$1")
+                .replace(/\*(.*?)\*/g, "$1")
+                .replace(/^#{1,6}\s+/gm, "")
+                .replace(/^[-*+]\s+/gm, "• ")
+                .replace(/^\d+\.\s+/gm, "")
+                .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+                .replace(/`{1,3}([^`]*)`{1,3}/g, "$1")
+                .replace(/^>\s+/gm, "")
+                .replace(/~~(.*?)~~/g, "$1")
+                .replace(/\n{3,}/g, "\n\n");
+              const ta = e.currentTarget;
+              const start = ta.selectionStart;
+              const end = ta.selectionEnd;
+              const newValue = titleScript.slice(0, start) + clean + titleScript.slice(end);
+              setTitleScript(newValue);
             }}
           />
         </div>

@@ -10,15 +10,19 @@ const AUDIENCE_LABEL: Record<string, string> = {
 
 export async function POST(request: Request) {
   try {
-    const { topic, audience, settings } = await request.json();
+    const { topic, script, audience, settings } = await request.json();
 
     const audienceLabel = AUDIENCE_LABEL[audience] ?? "tất cả đối tượng";
-    const model = settings?.titleModel || "gemini-2.5-flash";
+    const model = settings?.titleModel || "gemini-3.1-pro-preview";
+
+    const scriptSection = script
+      ? `\n\nNỘI DUNG VIDEO (script):\n"""\n${script}\n"""\n\nHãy đọc kỹ script trên để hiểu sâu nội dung, thông điệp chính, các điểm nhấn cảm xúc, và tạo title bám sát nội dung thực tế của video.`
+      : "";
 
     const prompt = `Bạn là chuyên gia tối ưu hóa tiêu đề YouTube cho kênh trading/tài chính/lifestyle trader tiếng Việt.
 
 Chủ đề video: "${topic}"
-Đối tượng: ${audienceLabel}
+Đối tượng: ${audienceLabel}${scriptSection}
 
 Tạo ĐÚNG 12 tiêu đề YouTube tiếng Việt theo 12 công thức khác nhau. Mỗi tiêu đề:
 - Tối đa 70 ký tự

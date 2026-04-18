@@ -14,7 +14,7 @@ const audiences = [
 ];
 
 export function Step1Context() {
-  const { step1, setStep1 } = useThumbnailStore();
+  const { step1, setStep1, selectedTitle } = useThumbnailStore();
   const { textModel } = useSettingsStore();
   const [isSuggesting, setIsSuggesting] = useState(false);
 
@@ -118,19 +118,21 @@ export function Step1Context() {
         </div>
       </div>
 
-      <button
-        className="apple-btn-secondary w-full gap-2 text-[13px] !h-10"
-        onClick={handleAiSuggest}
-        disabled={isSuggesting || (!step1.videoTopic && !step1.videoTitle)}
-        style={{ opacity: isSuggesting || (!step1.videoTopic && !step1.videoTitle) ? 0.4 : 1 }}
-      >
-        {isSuggesting ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
-        ) : (
-          <Sparkles className="w-4 h-4" />
-        )}
-        {isSuggesting ? "Đang gợi ý..." : vi.s1_ai_suggest}
-      </button>
+      {!selectedTitle && (
+        <button
+          className="apple-btn-secondary w-full gap-2 text-[13px] !h-10"
+          onClick={handleAiSuggest}
+          disabled={isSuggesting || (!step1.videoTopic && !step1.videoTitle)}
+          style={{ opacity: isSuggesting || (!step1.videoTopic && !step1.videoTitle) ? 0.4 : 1 }}
+        >
+          {isSuggesting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Sparkles className="w-4 h-4" />
+          )}
+          {isSuggesting ? "Đang gợi ý..." : vi.s1_ai_suggest}
+        </button>
+      )}
     </div>
   );
 }
